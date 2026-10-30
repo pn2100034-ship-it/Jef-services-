@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#159447">
+<link rel="manifest" href="manifest.json">
+<title>JËF SERVICE</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,Segoe UI,sans-serif;background:#f5faf7;color:#102218}
+header{background:#159447;color:#fff;padding:16px;position:sticky;top:0;z-index:10}.bar{max-width:900px;margin:auto;display:flex;justify-content:space-between;align-items:center}.brand{font-size:22px;font-weight:900}
+main{max-width:900px;margin:auto;padding:20px}.hero{background:#159447;color:white;border-radius:20px;padding:24px;margin-bottom:18px}.hero h1{margin:0 0 8px}.card{background:#fff;border:1px solid #dcebe2;border-radius:16px;padding:16px;margin-bottom:14px;box-shadow:0 5px 18px #123b2410}
+input,textarea,select,button{width:100%;padding:12px;border-radius:11px;border:1px solid #cfe0d6;font:inherit;margin-top:8px}
+button{background:#159447;color:#fff;border:0;font-weight:800;cursor:pointer}.secondary{background:#e9f7ef;color:#159447}.danger{background:#b42318}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.service h3{margin:0 0 5px}.price{font-weight:800;color:#159447}.hidden{display:none}.muted{color:#66776d;font-size:14px}
+nav{display:flex;gap:8px;margin-bottom:16px}nav button{margin:0}.list{display:grid;gap:10px}
+@media(max-width:600px){.grid{grid-template-columns:1fr}main{padding:14px}}
+</style>
+</head>
+<body>
+<header><div class="bar"><div class="brand">JËF SERVICE</div><div id="userLabel">Visiteur</div></div></header>
+<main>
+<section class="hero">
+<h1>Tes services, en quelques clics.</h1>
+<p>Plateforme sénégalaise pour trouver des prestataires et commander des services en ligne.</p>
+</section>
+
+<nav>
+<button onclick="show('services')">Services</button>
+<button class="secondary" onclick="show('orders')">Mes commandes</button>
+<button class="secondary" onclick="show('account')">Compte</button>
+</nav>
+
+<section id="services">
+<div class="card"><input id="search" placeholder="Rechercher un service..." oninput="renderServices()"></div>
+<div id="serviceGrid" class="grid"></div>
+</section>
+
+<section id="orders" class="hidden">
+<div class="card"><h2>Mes commandes</h2><div id="ordersList" class="list"></div></div>
+</section>
+
+<section id="account" class="hidden">
+<div class="card">
+<h2>Mon compte</h2>
+<input id="name" placeholder="Nom">
+<input id="phone" placeholder="Téléphone">
+<select id="role"><option value="client">Client</option><option value="provider">Prestataire</option></select>
+<button onclick="saveAccount()">Enregistrer</button>
+<p id="accountMsg" class="muted"></p>
+</div>
+</section>
+</main>
+
+<script>
+const services=[
+{id:1,title:"Création de CV professionnel",cat:"Rédaction",price:5000,desc:"CV moderne livré en PDF."},
+{id:2,title:"Logo professionnel",cat:"Design",price:10000,desc:"Logo personnalisé pour votre activité."},
+{id:3,title:"Montage vidéo",cat:"Vidéo",price:15000,desc:"Montage pour réseaux sociaux."},
+{id:4,title:"Traduction français ↔ Wolof",cat:"Traduction",price:5000,desc:"Traduction de textes et contenus."},
+{id:5,title:"Gestion des réseaux sociaux",cat:"Communication",price:10000,desc:"Publications et communication digitale."},
+{id:6,title:"Assistance numérique",cat:"Assistance",price:3000,desc:"Aide pour outils et démarches en ligne."}
+];
+let account=JSON.parse(localStorage.getItem("jef_account")||"null");
+let orders=JSON.parse(localStorage.getItem("jef_orders")||"[]");
+
+function show(id){
+ document.querySelectorAll("main>section:not(.hero)").forEach(x=>x.classList.add("hidden"));
+ document.getElementById(id).classList.remove("hidden");
+ if(id==="services")renderServices(); if(id==="orders")renderOrders(); if(id==="account")loadAccount();
+}
+function renderServices(){
+ const q=(document.getElementById("search").value||"").toLowerCase();
+ const box=document.getElementById("serviceGrid"); box.innerHTML="";
+ services.filter(s=>(s.title+" "+s.cat+" "+s.desc).toLowerCase().includes(q)).forEach(s=>{
+  const d=document.createElement("div");d.className="card service";
+  d.innerHTML=`<h3>${s.title}</h3><div class="muted">${s.cat}</div><p>${s.desc}</p><div class="price">${s.price.toLocaleString("fr-FR")} FCFA</div><button onclick="order(${s.id})">Commander</button>`;
+  box.appendChild(d);
+ });
+}
+function order(id){
+ const s=services.find(x=>x.id===id);
+ if(!account){alert("Crée d'abord ton compte dans « Compte ».");show("account");return;}
+ const details=prompt("Décris ton besoin pour « "+s.title+" » :","");
+ if(details===null)return;
+ orders.push({id:Date.now(),service:s.title,price:s.price,details,status:"En attente",created:new Date().toLocaleString("fr-FR")});
+ localStorage.setItem("jef_orders",JSON.stringify(orders));
+ alert("Commande enregistrée. Le prestataire pourra être contacté pour la suite.");
+ show("orders");
+}
+function renderOrders(){
+ const box=document.getElementById("ordersList");box.innerHTML="";
+ if(!orders.length){box.innerHTML='<p class="muted">Aucune commande pour le moment.</p>';return;}
+ orders.slice().reverse().forEach(o=>{
+  const d=document.createElement("div");d.className="card";
+  d.innerHTML=`<b>${o.service}</b><p>${o.details||"Aucun détail"}</p><div class="muted">${o.created}</div><p><b>Statut :</b> ${o.status}</p>`;
+  box.appendChild(d);
+ });
+}
+function loadAccount(){
+ if(!account)return;
+ name.value=account.name||"";phone.value=account.phone||"";role.value=account.role||"client";
+}
+function saveAccount(){
+ account={name:name.value.trim(),phone:phone.value.trim(),role:role.value};
+ localStorage.setItem("jef_account",JSON.stringify(account));
+ userLabel.textContent=account.name||"Utilisateur";
+ accountMsg.textContent="Compte enregistré sur cet appareil.";
+}
+if(account)userLabel.textContent=account.name||"Utilisateur";
+renderServices();
+if("serviceWorker" in navigator)navigator.serviceWorker.register("sw.js");
+</script>
+</body>
+</html>
