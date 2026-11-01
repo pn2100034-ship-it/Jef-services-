@@ -1,9 +1,10 @@
 {
-  "name": "JËF SERVICE",
-  "short_name": "JËF SERVICE",
+  "nom": "JËF SERVICE",
+  "nom_court": "JËF SERVICE",
+  "description": "Plateforme sénégalaise pour trouver et commander des services en ligne.",
   "start_url": "./",
-  "display": "standalone",
-  "background_color": "#f5faf7",
+  "afficher": "autonome",
+  "couleur_fond": "#f5faf7",
   "theme_color": "#159447",
   "lang": "fr"
 }
