@@ -8,73 +8,56 @@
 <link rel="manifest" href="./manifest.json">
 <title>JËF SERVICE</title>
 <style>
-:root{--green:#159447;--dark:#102218;--muted:#66776d;--line:#dcebe2;--bg:#f5faf7}
-*{box-sizing:border-box}
-body{margin:0;font-family:system-ui,-apple-system,Segoe UI,sans-serif;background:var(--bg);color:var(--dark)}
+:root{--green:#159447;--dark:#102218;--muted:#66776d;--line:#dcebe2;--bg:#f5faf7;--soft:#e8f5ed}
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,sans-serif;background:var(--bg);color:var(--dark)}
 header{background:var(--green);color:white;padding:15px 16px;position:sticky;top:0;z-index:5}
 .bar{max-width:900px;margin:auto;display:flex;justify-content:space-between;align-items:center;gap:12px}
-.brand{font-size:21px;font-weight:900;letter-spacing:.2px}
-#userLabel{font-size:14px;max-width:45%;overflow-wrap:anywhere}
-main{max-width:900px;margin:auto;padding:18px 14px 36px}
-.hero{background:var(--green);color:white;border-radius:20px;padding:22px;margin-bottom:16px}
+.brand{font-size:21px;font-weight:900}#userLabel{font-size:14px;max-width:45%;overflow-wrap:anywhere}
+main{max-width:900px;margin:auto;padding:18px 14px 36px}.hero{background:var(--green);color:white;border-radius:20px;padding:22px;margin-bottom:16px}
 .hero h1{margin:0 0 8px;font-size:27px}.hero p{margin:0;line-height:1.5}
-nav{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:16px 0}
-button,input,textarea,select{font:inherit}
-button{border:0;border-radius:11px;padding:12px 14px;background:var(--green);color:white;font-weight:750;cursor:pointer;min-height:44px}
-button.secondary{background:#e8f5ed;color:var(--green)}
-button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:3px solid #86cda1;outline-offset:2px}
+nav{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:16px 0}
+button,input,textarea,select{font:inherit}button{border:0;border-radius:11px;padding:12px 14px;background:var(--green);color:white;font-weight:750;cursor:pointer;min-height:44px}
+button.secondary{background:var(--soft);color:var(--green)}button:disabled{opacity:.5}
 .card{background:white;border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:13px;box-shadow:0 4px 15px #123b240b}
 input,textarea,select{width:100%;padding:12px;border:1px solid #cbded2;border-radius:10px;margin:7px 0 10px;background:white;color:var(--dark)}
-textarea{min-height:90px;resize:vertical}
-label{font-weight:650;font-size:14px}
-.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
-.service h3{margin:0 0 6px;font-size:18px}.muted{color:var(--muted);font-size:14px}.price{color:var(--green);font-weight:850;margin:10px 0}
-.hidden{display:none!important}.list{display:grid;gap:10px}
-.notice{padding:11px;border-radius:10px;background:#eef8f1;color:#176b38;font-size:14px;min-height:18px}
-.pill{display:inline-block;background:#e8f5ed;color:#176b38;padding:4px 9px;border-radius:20px;font-size:12px;font-weight:700}
+textarea{min-height:90px;resize:vertical}label{font-weight:650;font-size:14px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.service h3{margin:0 0 6px;font-size:18px}
+.muted{color:var(--muted);font-size:14px}.price{color:var(--green);font-weight:850;margin:10px 0}
+.hidden{display:none!important}.list{display:grid;gap:10px}.notice{padding:11px;border-radius:10px;background:#eef8f1;color:#176b38;font-size:14px;min-height:18px}
+.pill{display:inline-block;background:var(--soft);color:#176b38;padding:4px 9px;border-radius:20px;font-size:12px;font-weight:700}
+.row{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}.warning{background:#fff7e5;color:#76520b;padding:12px;border-radius:12px;font-size:13px;line-height:1.45}
 footer{text-align:center;color:var(--muted);font-size:13px;padding:16px}
-@media(max-width:600px){.grid{grid-template-columns:1fr}main{padding:13px}.hero h1{font-size:23px}nav button{padding:10px 5px;font-size:14px}}
+@media(max-width:600px){.grid{grid-template-columns:1fr}main{padding:13px}.hero h1{font-size:23px}nav{grid-template-columns:repeat(2,1fr)}nav button{padding:10px 5px;font-size:14px}}
 </style>
 </head>
 <body>
 <header><div class="bar"><div class="brand">JËF SERVICE</div><div id="userLabel">Visiteur</div></div></header>
 <main>
-<section class="hero">
-<h1>Tes services, en quelques clics.</h1>
-<p>Plateforme sénégalaise pour trouver des prestataires et commander des services en ligne.</p>
-</section>
+<section class="hero"><h1>Tes services, en quelques clics.</h1><p>Une plateforme sénégalaise pour trouver des prestataires et commander des services en ligne.</p></section>
 <nav aria-label="Navigation">
 <button type="button" id="tabServices">Services</button>
 <button type="button" class="secondary" id="tabOrders">Mes commandes</button>
+<button type="button" class="secondary" id="tabProvider">Espace prestataire</button>
 <button type="button" class="secondary" id="tabAccount">Compte</button>
 </nav>
-
-<section id="servicesSection">
-<div class="card"><label for="search">Rechercher un service</label><input id="search" type="search" placeholder="Ex. CV, logo, vidéo..."></div>
-<div id="serviceGrid" class="grid"></div>
+<section id="servicesSection"><div class="card"><label for="search">Rechercher un service</label><input id="search" type="search" placeholder="Ex. CV, logo, vidéo..."></div><div id="serviceGrid" class="grid"></div></section>
+<section id="ordersSection" class="hidden"><div class="card"><h2>Mes commandes</h2><div id="ordersList" class="list"></div></div></section>
+<section id="providerSection" class="hidden">
+<div class="card"><div class="row"><h2>Espace prestataire</h2><span class="pill">Commission : 10 %</span></div>
+<p class="muted">Consulte les demandes et accepte les missions correspondant à tes compétences.</p>
+<div class="warning">Version de démonstration : les commandes et profils sont enregistrés uniquement dans ce navigateur. Pour recevoir de vraies commandes depuis d'autres téléphones, une base de données et une connexion sécurisée seront nécessaires.</div></div>
+<div class="card"><h3>Mes missions et missions disponibles</h3><div id="providerOrders" class="list"></div></div>
+<div class="card"><h3>Rémunération estimée</h3><p id="providerEarnings" class="price">0 FCFA</p><p class="muted">Montant indicatif après déduction de 10 %. Aucun paiement réel n'est effectué par cette version.</p></div>
 </section>
-
-<section id="ordersSection" class="hidden">
-<div class="card"><h2>Mes commandes</h2><div id="ordersList" class="list"></div></div>
-</section>
-
-<section id="accountSection" class="hidden">
-<div class="card">
-<h2>Mon compte</h2>
-<p class="muted">Renseigne tes coordonnées pour pouvoir passer une commande sur cet appareil.</p>
-<label for="name">Nom complet</label>
-<input id="name" autocomplete="name" placeholder="Ton nom">
-<label for="phone">Téléphone</label>
-<input id="phone" type="tel" autocomplete="tel" placeholder="Ex. 77 000 00 00">
-<label for="role">Je suis</label>
-<select id="role"><option value="client">Client</option><option value="provider">Prestataire</option></select>
-<button type="button" id="saveAccountButton">Enregistrer</button>
-<p id="accountMsg" class="notice" aria-live="polite"></p>
-</div>
-</section>
+<section id="accountSection" class="hidden"><div class="card"><h2>Mon compte</h2><p class="muted">Renseigne tes coordonnées pour utiliser les fonctions adaptées à ton profil.</p>
+<label for="name">Nom complet</label><input id="name" autocomplete="name" placeholder="Ton nom">
+<label for="phone">Téléphone</label><input id="phone" type="tel" autocomplete="tel" placeholder="Ex. 77 000 00 00">
+<label for="role">Je suis</label><select id="role"><option value="client">Client</option><option value="provider">Prestataire</option></select>
+<label for="skills">Mes compétences (prestataire)</label><input id="skills" placeholder="Ex. CV, logo, montage vidéo">
+<button type="button" id="saveAccountButton">Enregistrer</button><p id="accountMsg" class="notice" aria-live="polite"></p>
+</div></section>
 <footer>JËF SERVICE · Tes services, en quelques clics.</footer>
 </main>
-
 <script>
 "use strict";
 const services=[
@@ -85,106 +68,67 @@ const services=[
 {id:5,title:"Gestion des réseaux sociaux",cat:"Communication",price:10000,desc:"Publications et communication digitale."},
 {id:6,title:"Assistance numérique",cat:"Assistance",price:3000,desc:"Aide pour outils et démarches en ligne."}
 ];
-const $=id=>document.getElementById(id);
-function readStore(key,fallback){
- try{const value=localStorage.getItem(key);return value?JSON.parse(value):fallback;}
- catch(error){return fallback;}
+const RATE=.10,$=id=>document.getElementById(id);
+function readStore(k,f){try{const v=localStorage.getItem(k);return v?JSON.parse(v):f}catch(e){return f}}
+function saveStore(k,v){try{localStorage.setItem(k,JSON.stringify(v));return true}catch(e){return false}}
+function money(n){return Number(n||0).toLocaleString("fr-FR")+" FCFA"}
+let account=readStore("jef_account",null),orders=readStore("jef_orders",[]);if(!Array.isArray(orders))orders=[];
+function show(s){
+ const map={services:"servicesSection",orders:"ordersSection",provider:"providerSection",account:"accountSection"};
+ Object.entries(map).forEach(([k,id])=>$(id).classList.toggle("hidden",k!==s));
+ const tabs={services:"tabServices",orders:"tabOrders",provider:"tabProvider",account:"tabAccount"};
+ Object.entries(tabs).forEach(([k,id])=>$(id).classList.toggle("secondary",k!==s));
+ if(s==="services")renderServices();if(s==="orders")renderOrders();if(s==="provider")renderProvider();if(s==="account")loadAccount();
 }
-let account=readStore("jef_account",null);
-let orders=readStore("jef_orders",[]);
-if(!Array.isArray(orders))orders=[];
-function saveStore(key,value){
- try{localStorage.setItem(key,JSON.stringify(value));return true;}
- catch(error){return false;}
-}
-function show(section){
- $("servicesSection").classList.toggle("hidden",section!=="services");
- $("ordersSection").classList.toggle("hidden",section!=="orders");
- $("accountSection").classList.toggle("hidden",section!=="account");
- $("tabServices").classList.toggle("secondary",section!=="services");
- $("tabOrders").classList.toggle("secondary",section!=="orders");
- $("tabAccount").classList.toggle("secondary",section!=="account");
- if(section==="services")renderServices();
- if(section==="orders")renderOrders();
- if(section==="account")loadAccount();
-}
-function updateHeader(){
- $("userLabel").textContent=account&&account.name?account.name:"Visiteur";
-}
+function updateHeader(){$("userLabel").textContent=account?.name||"Visiteur"}
 function renderServices(){
- const q=$("search").value.trim().toLocaleLowerCase("fr");
- const box=$("serviceGrid");box.replaceChildren();
- const filtered=services.filter(s=>(s.title+" "+s.cat+" "+s.desc).toLocaleLowerCase("fr").includes(q));
- if(!filtered.length){box.innerHTML='<div class="card muted">Aucun service trouvé. Essaie un autre mot.</div>';return;}
- filtered.forEach(s=>{
-  const card=document.createElement("article");card.className="card service";
-  const title=document.createElement("h3");title.textContent=s.title;
-  const cat=document.createElement("span");cat.className="pill";cat.textContent=s.cat;
-  const desc=document.createElement("p");desc.className="muted";desc.textContent=s.desc;
-  const price=document.createElement("div");price.className="price";price.textContent=s.price.toLocaleString("fr-FR")+" FCFA";
-  const btn=document.createElement("button");btn.type="button";btn.textContent="Commander";btn.addEventListener("click",()=>createOrder(s.id));
-  card.append(title,cat,desc,price,btn);box.appendChild(card);
- });
+ const q=$("search").value.trim().toLocaleLowerCase("fr"),box=$("serviceGrid");box.replaceChildren();
+ const found=services.filter(s=>(s.title+" "+s.cat+" "+s.desc).toLocaleLowerCase("fr").includes(q));
+ if(!found.length){const p=document.createElement("p");p.className="muted";p.textContent="Aucun service trouvé.";box.append(p);return}
+ found.forEach(s=>{const c=document.createElement("article");c.className="card service";
+ const h=document.createElement("h3");h.textContent=s.title;const cat=document.createElement("span");cat.className="pill";cat.textContent=s.cat;
+ const d=document.createElement("p");d.className="muted";d.textContent=s.desc;const p=document.createElement("div");p.className="price";p.textContent=money(s.price);
+ const b=document.createElement("button");b.type="button";b.textContent="Commander";b.addEventListener("click",()=>createOrder(s.id));c.append(h,cat,d,p,b);box.append(c)});
 }
-function createOrder(serviceId){
- if(!account){alert("Crée d'abord ton compte dans l'onglet Compte.");show("account");return;}
- const service=services.find(s=>s.id===serviceId);if(!service)return;
- const details=prompt("Décris ton besoin pour « "+service.title+" » :","");
- if(details===null)return;
- if(!details.trim()){alert("Ajoute une courte description de ton besoin.");return;}
- const order={id:Date.now(),service:service.title,price:service.price,details:details.trim(),status:"En attente",created:new Date().toLocaleString("fr-FR")};
- orders.push(order);
- if(!saveStore("jef_orders",orders)){alert("Impossible d'enregistrer la commande sur cet appareil.");return;}
- alert("Commande enregistrée sur cet appareil.");
- show("orders");
+function createOrder(id){
+ if(!account){alert("Crée d'abord ton compte dans l'onglet Compte.");show("account");return}
+ if(account.role==="provider"){alert("Ton compte est prestataire. Utilise l'espace prestataire.");show("provider");return}
+ const s=services.find(x=>x.id===id);if(!s)return;const details=prompt("Décris ton besoin pour « "+s.title+" » :","");
+ if(details===null)return;if(!details.trim()){alert("Ajoute une description.");return}
+ orders.push({id:Date.now(),serviceId:s.id,service:s.title,price:s.price,details:details.trim(),status:"Disponible",created:new Date().toLocaleString("fr-FR"),provider:null});
+ if(!saveStore("jef_orders",orders)){alert("Enregistrement impossible sur cet appareil.");return}
+ alert("Demande enregistrée. Elle est visible dans l'espace prestataire de ce navigateur.");show("orders");
 }
 function renderOrders(){
- const box=$("ordersList");box.replaceChildren();
- if(!orders.length){const p=document.createElement("p");p.className="muted";p.textContent="Aucune commande pour le moment.";box.appendChild(p);return;}
- [...orders].reverse().forEach(o=>{
-  const card=document.createElement("article");card.className="card";
-  const title=document.createElement("strong");title.textContent=o.service||"Service";
-  const details=document.createElement("p");details.textContent=o.details||"Aucun détail";
-  const date=document.createElement("p");date.className="muted";date.textContent=o.created||"";
-  const status=document.createElement("p");status.innerHTML="<strong>Statut :</strong> ";
-  const statusText=document.createElement("span");statusText.textContent=o.status||"En attente";status.appendChild(statusText);
-  card.append(title,details,date,status);box.appendChild(card);
- });
+ const box=$("ordersList");box.replaceChildren();if(!orders.length){const p=document.createElement("p");p.className="muted";p.textContent="Aucune commande pour le moment.";box.append(p);return}
+ [...orders].reverse().forEach(o=>{const c=document.createElement("article");c.className="card";const h=document.createElement("strong");h.textContent=o.service;
+ const d=document.createElement("p");d.textContent=o.details;const dt=document.createElement("p");dt.className="muted";dt.textContent=o.created||"";
+ const st=document.createElement("p");st.textContent="Statut : "+o.status;const pr=document.createElement("p");pr.className="muted";pr.textContent=o.provider?"Prestataire : "+o.provider:"Prestataire : en attente";c.append(h,d,dt,st,pr);box.append(c)});
 }
-function loadAccount(){
- if(!account)return;
- $("name").value=account.name||"";
- $("phone").value=account.phone||"";
- $("role").value=account.role||"client";
+function renderProvider(){
+ const box=$("providerOrders");box.replaceChildren();
+ if(!account||account.role!=="provider"){const p=document.createElement("p");p.className="muted";p.textContent="Pour voir les missions, va dans Compte et choisis « Prestataire ».";box.append(p);$("providerEarnings").textContent="0 FCFA";return}
+ const mine=orders.filter(o=>o.provider===account.name),available=orders.filter(o=>!o.provider);
+ if(!mine.length&&!available.length){const p=document.createElement("p");p.className="muted";p.textContent="Aucune mission pour le moment.";box.append(p)}
+ available.forEach(o=>{const c=document.createElement("article");c.className="card";const h=document.createElement("strong");h.textContent=o.service;
+ const d=document.createElement("p");d.textContent=o.details;const p=document.createElement("p");p.className="price";p.textContent="Prix : "+money(o.price);
+ const fee=document.createElement("p");fee.className="muted";fee.textContent="Commission JËF SERVICE (10 %) : "+money(o.price*RATE);
+ const net=document.createElement("p");net.className="muted";net.textContent="Ta rémunération estimée (90 %) : "+money(o.price*(1-RATE));
+ const b=document.createElement("button");b.type="button";b.textContent="Accepter la mission";b.addEventListener("click",()=>{const i=orders.findIndex(x=>x.id===o.id);if(i<0||orders[i].provider){alert("Mission déjà attribuée.");renderProvider();return}orders[i].provider=account.name;orders[i].status="Acceptée";if(!saveStore("jef_orders",orders)){alert("Enregistrement impossible.");return}renderProvider()});
+ c.append(h,d,p,fee,net,b);box.append(c)});
+ mine.forEach(o=>{const c=document.createElement("article");c.className="card";const h=document.createElement("strong");h.textContent=o.service;const d=document.createElement("p");d.textContent=o.details;const st=document.createElement("p");st.textContent="Statut : "+o.status;const net=document.createElement("p");net.className="price";net.textContent="Rémunération estimée : "+money(o.price*(1-RATE));c.append(h,d,st,net);box.append(c)});
+ $("providerEarnings").textContent=money(mine.reduce((sum,o)=>sum+o.price*(1-RATE),0));
 }
+function loadAccount(){if(!account)return;$("name").value=account.name||"";$("phone").value=account.phone||"";$("role").value=account.role||"client";$("skills").value=account.skills||""}
 function saveAccount(){
- const nameInput=$("name");
- const phoneInput=$("phone");
- const roleInput=$("role");
- const accountMsg=$("accountMsg");
- const name=nameInput.value.trim();
- const phone=phoneInput.value.trim();
- const role=roleInput.value;
- if(!name||!phone){accountMsg.textContent="Veuillez renseigner votre nom et votre numéro de téléphone.";return;}
- const newAccount={name,phone,role};
- if(!saveStore("jef_account",newAccount)){
-  accountMsg.textContent="Enregistrement impossible sur cet appareil. Vérifie l'espace disponible puis réessaie.";
-  return;
- }
- account=newAccount;
- updateHeader();
- accountMsg.textContent="✅ Compte enregistré avec succès sur cet appareil.";
+ const name=$("name").value.trim(),phone=$("phone").value.trim(),role=$("role").value,skills=$("skills").value.trim(),msg=$("accountMsg");
+ if(!name||!phone){msg.textContent="Veuillez renseigner votre nom et votre numéro de téléphone.";return}
+ const a={name,phone,role,skills};if(!saveStore("jef_account",a)){msg.textContent="Enregistrement impossible sur cet appareil.";return}
+ account=a;updateHeader();msg.textContent="Compte enregistré avec succès sur cet appareil.";
 }
-$("tabServices").addEventListener("click",()=>show("services"));
-$("tabOrders").addEventListener("click",()=>show("orders"));
-$("tabAccount").addEventListener("click",()=>show("account"));
-$("saveAccountButton").addEventListener("click",saveAccount);
-$("search").addEventListener("input",renderServices);
-updateHeader();
-renderServices();
-if("serviceWorker" in navigator && location.protocol.startsWith("http")){
- navigator.serviceWorker.register("./sw.js").catch(()=>{});
-}
+$("tabServices").addEventListener("click",()=>show("services"));$("tabOrders").addEventListener("click",()=>show("orders"));
+$("tabProvider").addEventListener("click",()=>show("provider"));$("tabAccount").addEventListener("click",()=>show("account"));
+$("saveAccountButton").addEventListener("click",saveAccount);$("search").addEventListener("input",renderServices);
+updateHeader();renderServices();if("serviceWorker" in navigator&&location.protocol.startsWith("http"))navigator.serviceWorker.register("./sw.js").catch(()=>{});
 </script>
-</body>
- </html>
+</body></html>
