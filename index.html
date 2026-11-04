@@ -1,134 +1,25 @@
 <!doctype html>
-<html lang="fr">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#159447">
-<meta name="description" content="Plateforme sénégalaise pour trouver et commander des services en ligne.">
-<link rel="manifest" href="./manifest.json">
-<title>JËF SERVICE</title>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#087b49"><title>JËF SERVICE</title>
 <style>
-:root{--green:#159447;--dark:#102218;--muted:#66776d;--line:#dcebe2;--bg:#f5faf7;--soft:#e8f5ed}
-*{box-sizing:border-box}body{margin:0;font-family:system-ui,sans-serif;background:var(--bg);color:var(--dark)}
-header{background:var(--green);color:white;padding:15px 16px;position:sticky;top:0;z-index:5}
-.bar{max-width:900px;margin:auto;display:flex;justify-content:space-between;align-items:center;gap:12px}
-.brand{font-size:21px;font-weight:900}#userLabel{font-size:14px;max-width:45%;overflow-wrap:anywhere}
-main{max-width:900px;margin:auto;padding:18px 14px 36px}.hero{background:var(--green);color:white;border-radius:20px;padding:22px;margin-bottom:16px}
-.hero h1{margin:0 0 8px;font-size:27px}.hero p{margin:0;line-height:1.5}
-nav{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:16px 0}
-button,input,textarea,select{font:inherit}button{border:0;border-radius:11px;padding:12px 14px;background:var(--green);color:white;font-weight:750;cursor:pointer;min-height:44px}
-button.secondary{background:var(--soft);color:var(--green)}button:disabled{opacity:.5}
-.card{background:white;border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:13px;box-shadow:0 4px 15px #123b240b}
-input,textarea,select{width:100%;padding:12px;border:1px solid #cbded2;border-radius:10px;margin:7px 0 10px;background:white;color:var(--dark)}
-textarea{min-height:90px;resize:vertical}label{font-weight:650;font-size:14px}
-.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.service h3{margin:0 0 6px;font-size:18px}
-.muted{color:var(--muted);font-size:14px}.price{color:var(--green);font-weight:850;margin:10px 0}
-.hidden{display:none!important}.list{display:grid;gap:10px}.notice{padding:11px;border-radius:10px;background:#eef8f1;color:#176b38;font-size:14px;min-height:18px}
-.pill{display:inline-block;background:var(--soft);color:#176b38;padding:4px 9px;border-radius:20px;font-size:12px;font-weight:700}
-.row{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}.warning{background:#fff7e5;color:#76520b;padding:12px;border-radius:12px;font-size:13px;line-height:1.45}
-footer{text-align:center;color:var(--muted);font-size:13px;padding:16px}
-@media(max-width:600px){.grid{grid-template-columns:1fr}main{padding:13px}.hero h1{font-size:23px}nav{grid-template-columns:repeat(2,1fr)}nav button{padding:10px 5px;font-size:14px}}
-</style>
-</head>
-<body>
-<header><div class="bar"><div class="brand">JËF SERVICE</div><div id="userLabel">Visiteur</div></div></header>
-<main>
-<section class="hero"><h1>Tes services, en quelques clics.</h1><p>Une plateforme sénégalaise pour trouver des prestataires et commander des services en ligne.</p></section>
-<nav aria-label="Navigation">
-<button type="button" id="tabServices">Services</button>
-<button type="button" class="secondary" id="tabOrders">Mes commandes</button>
-<button type="button" class="secondary" id="tabProvider">Espace prestataire</button>
-<button type="button" class="secondary" id="tabAccount">Compte</button>
-</nav>
-<section id="servicesSection"><div class="card"><label for="search">Rechercher un service</label><input id="search" type="search" placeholder="Ex. CV, logo, vidéo..."></div><div id="serviceGrid" class="grid"></div></section>
-<section id="ordersSection" class="hidden"><div class="card"><h2>Mes commandes</h2><div id="ordersList" class="list"></div></div></section>
-<section id="providerSection" class="hidden">
-<div class="card"><div class="row"><h2>Espace prestataire</h2><span class="pill">Commission : 10 %</span></div>
-<p class="muted">Consulte les demandes et accepte les missions correspondant à tes compétences.</p>
-<div class="warning">Version de démonstration : les commandes et profils sont enregistrés uniquement dans ce navigateur. Pour recevoir de vraies commandes depuis d'autres téléphones, une base de données et une connexion sécurisée seront nécessaires.</div></div>
-<div class="card"><h3>Mes missions et missions disponibles</h3><div id="providerOrders" class="list"></div></div>
-<div class="card"><h3>Rémunération estimée</h3><p id="providerEarnings" class="price">0 FCFA</p><p class="muted">Montant indicatif après déduction de 10 %. Aucun paiement réel n'est effectué par cette version.</p></div>
-</section>
-<section id="accountSection" class="hidden"><div class="card"><h2>Mon compte</h2><p class="muted">Renseigne tes coordonnées pour utiliser les fonctions adaptées à ton profil.</p>
-<label for="name">Nom complet</label><input id="name" autocomplete="name" placeholder="Ton nom">
-<label for="phone">Téléphone</label><input id="phone" type="tel" autocomplete="tel" placeholder="Ex. 77 000 00 00">
-<label for="role">Je suis</label><select id="role"><option value="client">Client</option><option value="provider">Prestataire</option></select>
-<label for="skills">Mes compétences (prestataire)</label><input id="skills" placeholder="Ex. CV, logo, montage vidéo">
-<button type="button" id="saveAccountButton">Enregistrer</button><p id="accountMsg" class="notice" aria-live="polite"></p>
-</div></section>
-<footer>JËF SERVICE · Tes services, en quelques clics.</footer>
-</main>
+:root{--g:#087b49;--mint:#eaf6ef;--ink:#17251e;--muted:#65736b;--line:#e1ebe5}*{box-sizing:border-box}body{margin:0;background:#f4f8f5;color:var(--ink);font:15px system-ui,Arial}header{background:#111b1b;color:white;padding:15px;display:flex;justify-content:space-between;position:sticky;top:0}.brand{font-weight:850;font-size:18px}.user{font-size:12px;color:#d8e7df}main{max-width:760px;margin:auto;padding:14px 14px 90px}.hero{background:linear-gradient(125deg,#18372d,#087b49);color:white;border-radius:22px;padding:22px 18px;margin-bottom:14px;min-height:150px}.hero h1{font-size:24px;line-height:1.2;margin:12px 0}.hero p{font-size:14px;line-height:1.5;color:#e6f3eb}.tag,.pill{display:inline-block;border-radius:20px;padding:5px 9px;background:#e7f5ec;color:#267447;font-size:11px;font-weight:700}.tag{background:#ffffff24;color:white}.search{display:flex;gap:8px;background:white;border:1px solid var(--line);border-radius:14px;padding:11px;margin:14px 0}.search input{border:0;outline:0;width:100%;font:inherit}.head{display:flex;justify-content:space-between;align-items:center;margin:20px 2px 12px}.head h2{font-size:18px;margin:0}.head button{background:none;color:var(--g);padding:4px}.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.card,.panel,.item{background:white;border:1px solid var(--line);border-radius:17px;padding:13px;min-width:0}.emoji{font-size:23px;background:var(--mint);width:42px;height:42px;border-radius:12px;display:grid;place-items:center;margin-bottom:9px}.card h3,.item h3{font-size:14px;margin:7px 0}.card p,.item p,.muted{font-size:12px;color:var(--muted);line-height:1.45}.price{font-weight:850;color:var(--g);margin:9px 0}button{border:0;border-radius:11px;padding:10px 12px;background:var(--g);color:white;font-weight:750;font-size:13px;cursor:pointer}.card button{width:100%}.secondary{background:var(--mint);color:var(--g)}.full{width:100%}.bottom{position:fixed;bottom:0;left:0;right:0;background:#111b1b;display:grid;grid-template-columns:repeat(5,1fr);padding:6px;z-index:5}.bottom button{background:transparent;color:#d9e6df;font-size:10px;padding:7px 2px;display:flex;flex-direction:column;gap:3px}.bottom button.active{background:var(--g)}.ico{font-size:19px}label{display:block;font-size:12px;font-weight:700;margin:12px 0 5px}input,select,textarea{width:100%;padding:11px;border:1px solid var(--line);border-radius:10px;font:inherit}textarea{min-height:75px}.empty{text-align:center;color:var(--muted);padding:25px}.stat{background:var(--mint);padding:12px;border-radius:12px;flex:1}.stat b{display:block;color:var(--g);font-size:20px}@media(max-width:440px){.cards{grid-template-columns:1fr 1fr}.card{padding:11px}.card p{min-height:48px}}
+</style></head><body>
+<header><div class="brand">JËF SERVICE 🇸🇳</div><div class="user" id="userhead">Bienvenue</div></header><main id="app"></main>
+<nav class="bottom"><button data-tab="home" class="active"><span class="ico">⌂</span>Accueil</button><button data-tab="services"><span class="ico">▦</span>Services</button><button data-tab="orders"><span class="ico">▤</span>Commandes</button><button data-tab="messages"><span class="ico">✉</span>Messages</button><button data-tab="profile"><span class="ico">♙</span>Profil</button></nav>
 <script>
-"use strict";
-const services=[
-{id:1,title:"Création de CV professionnel",cat:"Rédaction",price:5000,desc:"CV moderne livré en PDF."},
-{id:2,title:"Logo professionnel",cat:"Design",price:10000,desc:"Logo personnalisé pour votre activité."},
-{id:3,title:"Montage vidéo",cat:"Vidéo",price:15000,desc:"Montage pour réseaux sociaux."},
-{id:4,title:"Traduction français ↔ Wolof",cat:"Traduction",price:5000,desc:"Traduction de textes et contenus."},
-{id:5,title:"Gestion des réseaux sociaux",cat:"Communication",price:10000,desc:"Publications et communication digitale."},
-{id:6,title:"Assistance numérique",cat:"Assistance",price:3000,desc:"Aide pour outils et démarches en ligne."}
-];
-const RATE=.10,$=id=>document.getElementById(id);
-function readStore(k,f){try{const v=localStorage.getItem(k);return v?JSON.parse(v):f}catch(e){return f}}
-function saveStore(k,v){try{localStorage.setItem(k,JSON.stringify(v));return true}catch(e){return false}}
-function money(n){return Number(n||0).toLocaleString("fr-FR")+" FCFA"}
-let account=readStore("jef_account",null),orders=readStore("jef_orders",[]);if(!Array.isArray(orders))orders=[];
-function show(s){
- const map={services:"servicesSection",orders:"ordersSection",provider:"providerSection",account:"accountSection"};
- Object.entries(map).forEach(([k,id])=>$(id).classList.toggle("hidden",k!==s));
- const tabs={services:"tabServices",orders:"tabOrders",provider:"tabProvider",account:"tabAccount"};
- Object.entries(tabs).forEach(([k,id])=>$(id).classList.toggle("secondary",k!==s));
- if(s==="services")renderServices();if(s==="orders")renderOrders();if(s==="provider")renderProvider();if(s==="account")loadAccount();
+const K='jef_service_redesign_v2',S=[['cv','📄','Rédaction','Création de CV professionnel','CV moderne livré en PDF.',5000],['logo','🎨','Design','Création de logo','Logo pro et identité visuelle.',7500],['video','🎬','Vidéo','Montage vidéo','Montage soigné de vos vidéos.',10000],['trad','🌍','Traduction','Traduction français-wolof','Traduction claire et fidèle.',3000],['assist','💻','Assistance','Assistance numérique','Aide pour vos tâches numériques.',4000],['social','📱','Communication','Gestion des réseaux sociaux','Aide à la gestion de vos pages.',12000]];
+let d=JSON.parse(localStorage.getItem(K)||'null')||{name:'',role:'Client',skills:'',orders:[]},tab='home',q='';const app=document.getElementById('app'),fmt=n=>Number(n).toLocaleString('fr-FR')+' FCFA';function save(){localStorage.setItem(K,JSON.stringify(d))}
+function card(s){return `<article class="card"><div class="emoji">${s[1]}</div><span class="pill">${s[2]}</span><h3>${s[3]}</h3><p>${s[4]}</p><div class="price">${fmt(s[5])}</div><button onclick="order('${s[0]}')">Commander →</button></article>`}
+function go(t){tab=t;document.querySelectorAll('.bottom button').forEach(b=>b.classList.toggle('active',b.dataset.tab===t));render()}
+document.querySelectorAll('.bottom button').forEach(b=>b.onclick=()=>go(b.dataset.tab));
+function render(){document.getElementById('userhead').textContent=d.name||'Bienvenue';
+if(tab==='home'||tab==='services'){let a=S.filter(s=>(s[3]+s[2]).toLowerCase().includes(q.toLowerCase()));app.innerHTML=`<section class="hero"><span class="tag">🇸🇳 Plateforme sénégalaise</span><h1>Tes services en quelques clics</h1><p>Une plateforme pour trouver des prestataires et commander des services en ligne.</p></section><div class="search">⌕ <input id="q" placeholder="Rechercher un service · Ex. CV, logo, vidéo..." value="${q}"></div><div class="head"><h2>${tab==='home'?'Services populaires':'Tous les services'}</h2><button onclick="go('services')">Voir tout ›</button></div><div class="cards">${a.map(card).join('')||'<p>Aucun service trouvé.</p>'}</div>`;document.getElementById('q').oninput=e=>{q=e.target.value;render();let x=document.getElementById('q');x.focus();x.setSelectionRange(q.length,q.length)}} 
+else if(tab==='orders'){app.innerHTML=`<div class="head"><h2>Mes commandes</h2></div>${d.orders.length?d.orders.map(o=>`<div class="item"><h3>${o.title}</h3><p>${o.date} · ${fmt(o.price)}</p><p>Statut : ${o.status}</p></div>`).join(''):'<div class="panel empty">Aucune commande pour le moment.</div>'}`}
+else if(tab==='messages'){app.innerHTML=`<div class="head"><h2>Messages</h2></div><div class="panel"><p>La messagerie sera activée lorsque la plateforme disposera d'une base de données et d'une connexion sécurisée.</p><p class="muted">Cette fonction n'envoie pas encore de messages.</p></div>`}
+else if(tab==='profile'){app.innerHTML=`<div class="head"><h2>Profil et compte</h2></div><div class="panel"><label>Nom affiché</label><input id="name" value="${d.name}" placeholder="Ton nom"><label>Type de compte</label><select id="role"><option ${d.role==='Client'?'selected':''}>Client</option><option ${d.role==='Prestataire'?'selected':''}>Prestataire</option></select><label>Compétences</label><textarea id="skills" placeholder="Ex. CV, logo, vidéo">${d.skills}</textarea><button class="full" onclick="profileSave()">Enregistrer mon profil</button></div><div class="panel"><b>Commission JËF SERVICE : 10 %</b><p class="muted">Part prévue : 90 % prestataire et 10 % plateforme. Le paiement partagé automatique reste à connecter.</p><button class="secondary full" onclick="go('provider')">Ouvrir l'espace prestataire</button></div>`}
+else if(tab==='provider'){let avail=d.orders.filter(o=>o.status==='En attente'),mine=d.orders.filter(o=>o.provider);app.innerHTML=`<div class="head"><h2>Espace prestataire</h2><span class="pill">Commission 10 %</span></div><div class="panel"><p>Consulte les demandes et accepte les missions correspondant à tes compétences.</p><div style="display:flex;gap:8px"><div class="stat"><b>90 %</b><span class="muted">Prestataire</span></div><div class="stat"><b>10 %</b><span class="muted">JËF SERVICE</span></div></div></div><h3>Missions disponibles</h3>${avail.length?avail.map(o=>`<div class="item"><h3>${o.title}</h3><p>${fmt(o.price)} · Part prévue : ${fmt(o.price*.9)}</p><button onclick="accept(${o.id})">Accepter la mission</button></div>`).join(''):'<div class="panel empty">Aucune mission disponible.</div>'}<h3>Mes missions</h3>${mine.map(o=>`<div class="item"><h3>${o.title}</h3><p>${o.status}</p></div>`).join('')||'<div class="panel empty">Aucune mission acceptée.</div>'}`}
 }
-function updateHeader(){$("userLabel").textContent=account?.name||"Visiteur"}
-function renderServices(){
- const q=$("search").value.trim().toLocaleLowerCase("fr"),box=$("serviceGrid");box.replaceChildren();
- const found=services.filter(s=>(s.title+" "+s.cat+" "+s.desc).toLocaleLowerCase("fr").includes(q));
- if(!found.length){const p=document.createElement("p");p.className="muted";p.textContent="Aucun service trouvé.";box.append(p);return}
- found.forEach(s=>{const c=document.createElement("article");c.className="card service";
- const h=document.createElement("h3");h.textContent=s.title;const cat=document.createElement("span");cat.className="pill";cat.textContent=s.cat;
- const d=document.createElement("p");d.className="muted";d.textContent=s.desc;const p=document.createElement("div");p.className="price";p.textContent=money(s.price);
- const b=document.createElement("button");b.type="button";b.textContent="Commander";b.addEventListener("click",()=>createOrder(s.id));c.append(h,cat,d,p,b);box.append(c)});
-}
-function createOrder(id){
- if(!account){alert("Crée d'abord ton compte dans l'onglet Compte.");show("account");return}
- if(account.role==="provider"){alert("Ton compte est prestataire. Utilise l'espace prestataire.");show("provider");return}
- const s=services.find(x=>x.id===id);if(!s)return;const details=prompt("Décris ton besoin pour « "+s.title+" » :","");
- if(details===null)return;if(!details.trim()){alert("Ajoute une description.");return}
- orders.push({id:Date.now(),serviceId:s.id,service:s.title,price:s.price,details:details.trim(),status:"Disponible",created:new Date().toLocaleString("fr-FR"),provider:null});
- if(!saveStore("jef_orders",orders)){alert("Enregistrement impossible sur cet appareil.");return}
- alert("Demande enregistrée. Elle est visible dans l'espace prestataire de ce navigateur.");show("orders");
-}
-function renderOrders(){
- const box=$("ordersList");box.replaceChildren();if(!orders.length){const p=document.createElement("p");p.className="muted";p.textContent="Aucune commande pour le moment.";box.append(p);return}
- [...orders].reverse().forEach(o=>{const c=document.createElement("article");c.className="card";const h=document.createElement("strong");h.textContent=o.service;
- const d=document.createElement("p");d.textContent=o.details;const dt=document.createElement("p");dt.className="muted";dt.textContent=o.created||"";
- const st=document.createElement("p");st.textContent="Statut : "+o.status;const pr=document.createElement("p");pr.className="muted";pr.textContent=o.provider?"Prestataire : "+o.provider:"Prestataire : en attente";c.append(h,d,dt,st,pr);box.append(c)});
-}
-function renderProvider(){
- const box=$("providerOrders");box.replaceChildren();
- if(!account||account.role!=="provider"){const p=document.createElement("p");p.className="muted";p.textContent="Pour voir les missions, va dans Compte et choisis « Prestataire ».";box.append(p);$("providerEarnings").textContent="0 FCFA";return}
- const mine=orders.filter(o=>o.provider===account.name),available=orders.filter(o=>!o.provider);
- if(!mine.length&&!available.length){const p=document.createElement("p");p.className="muted";p.textContent="Aucune mission pour le moment.";box.append(p)}
- available.forEach(o=>{const c=document.createElement("article");c.className="card";const h=document.createElement("strong");h.textContent=o.service;
- const d=document.createElement("p");d.textContent=o.details;const p=document.createElement("p");p.className="price";p.textContent="Prix : "+money(o.price);
- const fee=document.createElement("p");fee.className="muted";fee.textContent="Commission JËF SERVICE (10 %) : "+money(o.price*RATE);
- const net=document.createElement("p");net.className="muted";net.textContent="Ta rémunération estimée (90 %) : "+money(o.price*(1-RATE));
- const b=document.createElement("button");b.type="button";b.textContent="Accepter la mission";b.addEventListener("click",()=>{const i=orders.findIndex(x=>x.id===o.id);if(i<0||orders[i].provider){alert("Mission déjà attribuée.");renderProvider();return}orders[i].provider=account.name;orders[i].status="Acceptée";if(!saveStore("jef_orders",orders)){alert("Enregistrement impossible.");return}renderProvider()});
- c.append(h,d,p,fee,net,b);box.append(c)});
- mine.forEach(o=>{const c=document.createElement("article");c.className="card";const h=document.createElement("strong");h.textContent=o.service;const d=document.createElement("p");d.textContent=o.details;const st=document.createElement("p");st.textContent="Statut : "+o.status;const net=document.createElement("p");net.className="price";net.textContent="Rémunération estimée : "+money(o.price*(1-RATE));c.append(h,d,st,net);box.append(c)});
- $("providerEarnings").textContent=money(mine.reduce((sum,o)=>sum+o.price*(1-RATE),0));
-}
-function loadAccount(){if(!account)return;$("name").value=account.name||"";$("phone").value=account.phone||"";$("role").value=account.role||"client";$("skills").value=account.skills||""}
-function saveAccount(){
- const name=$("name").value.trim(),phone=$("phone").value.trim(),role=$("role").value,skills=$("skills").value.trim(),msg=$("accountMsg");
- if(!name||!phone){msg.textContent="Veuillez renseigner votre nom et votre numéro de téléphone.";return}
- const a={name,phone,role,skills};if(!saveStore("jef_account",a)){msg.textContent="Enregistrement impossible sur cet appareil.";return}
- account=a;updateHeader();msg.textContent="Compte enregistré avec succès sur cet appareil.";
-}
-$("tabServices").addEventListener("click",()=>show("services"));$("tabOrders").addEventListener("click",()=>show("orders"));
-$("tabProvider").addEventListener("click",()=>show("provider"));$("tabAccount").addEventListener("click",()=>show("account"));
-$("saveAccountButton").addEventListener("click",saveAccount);$("search").addEventListener("input",renderServices);
-updateHeader();renderServices();if("serviceWorker" in navigator&&location.protocol.startsWith("http"))navigator.serviceWorker.register("./sw.js").catch(()=>{});
-</script>
-</body></html>
+function order(id){let s=S.find(x=>x[0]===id);if(!d.name){alert('Enregistre ton nom dans Profil avant de commander.');go('profile');return}if(!confirm('Confirmer '+s[3]+' au prix de '+fmt(s[5])+' ?'))return;d.orders.unshift({id:Date.now(),title:s[3],price:s[5],status:'En attente',date:new Date().toLocaleDateString('fr-FR'),provider:false});save();alert('Commande de démonstration créée. Aucun paiement réel effectué.');go('orders')}
+function profileSave(){d.name=document.getElementById('name').value.trim();d.role=document.getElementById('role').value;d.skills=document.getElementById('skills').value;save();alert('Profil enregistré sur cet appareil.');go(d.role==='Prestataire'?'provider':'profile')}
+function accept(id){let o=d.orders.find(x=>x.id===id);if(o){o.provider=true;o.status='Acceptée par le prestataire';save();render()}}
+render();
+</script></body></html>
